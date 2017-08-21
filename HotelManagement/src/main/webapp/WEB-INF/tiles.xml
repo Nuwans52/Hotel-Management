@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="base.definition" template="/WEB-INF/views/layout.jsp">
+		<put-attribute name="title"
+			value="FrameworkOnly | Apache Tiles 3 + Spring 4 MVC"></put-attribute>
+		<put-attribute name="header" value=""></put-attribute>
+		<put-attribute name="sidebar" value=""></put-attribute>
+		<put-attribute name="body" value=""></put-attribute>
+		<put-attribute name="footer" value=""></put-attribute>
+		<put-list-attribute name="styless">
+			<add-attribute value="/resources/css/bootstrap.min.css"></add-attribute>
+			<add-attribute value="/resources/select2-3.5.2/select2.css"></add-attribute>
+			<add-attribute value="/resources/select2-bootstrap/select2-bootstrap.css"></add-attribute>
+		</put-list-attribute>
+		<put-list-attribute name="scriptjs">
+			<add-attribute value="/resources/jquery-3.2.1.min.js"></add-attribute>
+			<add-attribute value="/resources/js/bootstrap.min.js"></add-attribute>
+			<add-attribute value="/resources/select2-3.5.2/select2.min.js"></add-attribute>
+			<add-attribute value="/resources/validator.js"></add-attribute>
+			<add-attribute value="/resources/application-common.js"></add-attribute>
+		</put-list-attribute>
+	</definition>
+
+	<definition name="view" extends="base.definition">
+		<put-attribute name="title" value="Hotel | Search Hotels"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/view.jsp"></put-attribute>
+		<put-list-attribute name="styless" inherit="true">
+			<add-attribute value="/resources/datatables.net-bs/css/dataTables.bootstrap.min.css"></add-attribute>
+		</put-list-attribute>
+		<put-list-attribute name="scriptjs" inherit="true">
+			<add-attribute value="/resources/hotel-view.js"></add-attribute>
+			<add-attribute
+				value="/resources/datatables/media/js/jquery.dataTables.min.js"></add-attribute>
+			<add-attribute
+				value="/resources/datatables.net-bs/js/dataTables.bootstrap.min.js"></add-attribute>
+		</put-list-attribute>
+	</definition>
+	
+	<definition name="add" extends="base.definition">
+		<put-attribute name="title" value="Hotel | New Hotels"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/add.jsp"></put-attribute>
+		<put-list-attribute name="scriptjs" inherit="true">
+			<add-attribute value="/resources/hotel-add.js"></add-attribute>
+			<add-attribute
+				value="/resources/datatables/media/js/jquery.dataTables.min.js"></add-attribute>
+			<add-attribute
+				value="/resources/datatables.net-bs/js/dataTables.bootstrap.min.js"></add-attribute>
+		</put-list-attribute>
+	</definition>
+</tiles-definitions>

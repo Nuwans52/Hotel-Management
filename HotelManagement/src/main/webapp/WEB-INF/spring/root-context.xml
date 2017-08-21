@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- connection setting -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/hotels" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="hibernate3AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>org.hotel.entity.MCity</value>
+				<value>org.hotel.entity.MHotels</value>
+				<value>org.hotel.entity.RDistrict</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">false</prop>
+				<prop key="hibernate.jdbc.batch_size">100</prop>
+				<prop key="hibernate.order_inserts">true</prop>
+				<prop key="hibernate.order_updates">true</prop>
+
+			</props>
+		</property>
+	</bean>
+	<bean id="template" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory"></property>
+	</bean>
+
+	<bean id="MHotelsDao" class="org.hotel.service.MHotelsService">
+		<property name="template" ref="template" />
+	</bean>
+
+	<bean id="MCityDao" class="org.hotel.service.MCityService">
+		<property name="template" ref="template" />
+	</bean>
+
+	<bean id="RDistrictDao" class="org.hotel.service.RDistrictService">
+		<property name="template" ref="template" />
+	</bean>
+
+	<beans:bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>/WEB-INF/tiles.xml</beans:value>
+				<beans:value>/WEB-INF/views/**/views.xml</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+	<beans:bean id="tilesViewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass">
+			<beans:value>
+				org.springframework.web.servlet.view.tiles3.TilesView
+			</beans:value>
+		</beans:property>
+		<beans:property name="order" value="0" />
+	</beans:bean>
+</beans>
